@@ -1,5 +1,9 @@
 import java.util.Date;
 
+/*
+ * date: The date that the interaction was performed (always current date when instantiated)
+ * type: Type of interaction (FEED, SLEEP, EXERCISE) to correspond with Pet's characteristics
+ */
 public class Interaction {
 
     public Date date;
@@ -15,7 +19,4 @@ public class Interaction {
         SLEEP,
         EXERCISE
     }
-
 }
-
-

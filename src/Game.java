@@ -28,6 +28,11 @@ public class Game {
         prepareGUI();
     }
 
+    /*
+     * Creates initial window and asks the user to enter
+     * a name for their pet. Validates input and alerts user
+     * if the input is empty.
+     */
     private void prepareGUI(){
         mainFrame = new JFrame("Pet Game");
         mainFrame.setSize(400,200);
@@ -37,6 +42,7 @@ public class Game {
         JTextField petNameTextField = new JTextField();
         JButton submitButton = new JButton("Submit");
         
+        // Stops program if user closes the window (i.e. with red x button)
         mainFrame.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent windowEvent){
                 System.exit(0);
@@ -59,6 +65,9 @@ public class Game {
         mainFrame.setVisible(true);
      }
 
+     /*
+      * Creates the main game window and its components.
+      */
     private void prepareGameScreen() {
         mainFrame = new JFrame("Pet Game");
         mainFrame.setSize(400,600);
@@ -111,8 +120,8 @@ public class Game {
         // Pet Interaction History
         petInteractions = new JPanel();
         GridLayout petInteractionsPanelLayout = new GridLayout(0, 1);
-
         petInteractions.setLayout(petInteractionsPanelLayout);
+
         petInteractions.add(new JLabel("Interactions"));
 
         for (Interaction interaction : interactions) {
@@ -120,7 +129,6 @@ public class Game {
         }
         
         JScrollPane interactionsScrollPane = new JScrollPane(petInteractions);
-
 
         mainFrame.add(petImagePanel);
         mainFrame.add(petStatsPanel);
@@ -131,11 +139,16 @@ public class Game {
         startGameTicker();
     }
 
+    /*
+     * Depleets the Pet's food, awakeness and exercise by set values
+     * every 3 seconds and refreshes the stats panel to reflect the
+     * new values. Also increments the pet's age by 1 (day)
+     */
     private void startGameTicker() {
         Thread gameTicker = new Thread(() -> {
             while (true) {
                 try {
-                    Thread.sleep(5000); // Wait for 5 seconds
+                    Thread.sleep(3000); // Wait for 3 seconds
                     pet.age++;
                     pet.food -= 15;
                     pet.awakeness -= 10;
@@ -149,8 +162,11 @@ public class Game {
         gameTicker.start();
     }
 
+    /*
+     * Refreshes the stats panel with the current values of the pet
+     * and its interactions.
+     */
     private void refreshStats() {
-
         petImagePanel.removeAll();
         ImageIcon imageIcon = new ImageIcon("/Users/lcheskin/Documents/QMUL/Year 1/Projects/Pet/src/" + pet.getPetImageName());
         ImageIcon scaledImageIcon = new ImageIcon(imageIcon.getImage().getScaledInstance(100, 100, Image.SCALE_DEFAULT));
